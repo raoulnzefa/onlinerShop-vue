@@ -8,8 +8,10 @@
     </div>
     <div class="menu-area">
       <input type="text" placeholder="Search for items" />
-      <button @click="test" disabled class="search">Search</button>
-      <router-link to="/add-item" class="add-item">Add item</router-link>
+      <button class="search">Search</button>
+      <router-link to="/add-item" class="add-item" v-if="visibility"
+        >Add item</router-link
+      >
       <router-link to="/cart" @click="setPrice">Shop cart</router-link>
       <router-link to="/login">Sign in</router-link>
       <router-link class="product-a" to="/">Products</router-link>
@@ -20,8 +22,8 @@
 <script>
 export default {
   computed: {
-    checkTrue() {
-      return true;
+    visibility() {
+      return this.$store.getters.buttonVisibility;
     },
   },
   methods: {
@@ -34,10 +36,10 @@ export default {
           el.querySelector(".buy-section .price-zone .total-price h2")
             .textContent
         );
-        this.$store.getters.totalPriceGetters.unshift(singleElem);
+        this.$store.state.totalPrice.unshift(singleElem);
         console.log(singleElem);
       });
-      console.log(this.$store.getters.totalPriceGetters);
+      console.log(this.$store.state.totalPrice);
       const finalPrice = this.$store.state.totalPrice.reduce(
         (a, b) => a + b,
         0
@@ -45,11 +47,7 @@ export default {
       finalPriceZone.textContent = finalPrice;
     },
     setPrice() {
-      if (this.$store.state.totalPrice.length === 0) {
-        return;
-      } else {
-        setTimeout(this.checkShopcart, 200);
-      }
+      setTimeout(this.checkShopcart, 500);
     },
   },
 };

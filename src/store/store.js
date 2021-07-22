@@ -36,6 +36,7 @@ const store = createStore({
       productID: 4,
       selectedItems: [],
       totalPrice: [],
+      addButton: false,
     };
   },
   mutations: {
@@ -48,6 +49,9 @@ const store = createStore({
     clearArray(state) {
       state.selectedItems = [];
     },
+    toggleButton(state) {
+      state.addButton = true;
+    },
   },
   actions: {
     addItemToArray(context, payload) {
@@ -55,6 +59,9 @@ const store = createStore({
     },
     addNumber(context) {
       context.commit("addNumber");
+    },
+    toggleButton(context) {
+      context.commit("toggleButton");
     },
   },
   getters: {
@@ -66,6 +73,9 @@ const store = createStore({
     },
     totalPriceGetters(state) {
       return state.totalPrice;
+    },
+    buttonVisibility(state) {
+      return state.addButton;
     },
   },
 });
